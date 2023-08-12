@@ -33,7 +33,7 @@ Docker Compose is suitable for local development or small-scale deployments wher
 
 ##### Explain the Kubernetes Architecture.
 Kubernetes is a powerful container orchestration platform that automates the deployment, scaling, and management of containerized applications. Its architecture is designed to be highly scalable, fault-tolerant, and flexible. At a high level, Kubernetes architecture consists of the following main components:
-![[Pasted image 20230803153647.png]]
+![image](https://github.com/vgnshiyer/CS-Handbook/assets/39982819/8455b1fb-d40f-4c62-baa3-682e2e74d998)
 
 1. **Master Node:** The Master Node is the control plane of Kubernetes and manages the entire cluster. It includes several key components:
     
