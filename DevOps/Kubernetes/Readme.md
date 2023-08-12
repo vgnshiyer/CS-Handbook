@@ -98,3 +98,6 @@ Ingress network is a collection of rules that acts as an entry point to the Kube
     
 
 These are some of the essential components in Kubernetes. Understanding how they interact and work together is fundamental to effectively managing and deploying applications on Kubernetes.
+
+##### What is Kube-dns?
+kube-dns, also known as CoreDNS, is a DNS-based service discovery and name resolution component used in a Kubernetes clusters. It's responsible for managing the DNS (Domain Name System) resolution of domain names within the cluster.
