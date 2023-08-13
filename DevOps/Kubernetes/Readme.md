@@ -101,3 +101,22 @@ These are some of the essential components in Kubernetes. Understanding how they
 
 ##### What is Kube-dns?
 kube-dns, also known as CoreDNS, is a DNS-based service discovery and name resolution component used in a Kubernetes clusters. It's responsible for managing the DNS (Domain Name System) resolution of domain names within the cluster.
+
+##### Statefulset vs Deployment?
+StatefulSet and Deployment are both controllers in Kubernetes that manage the deployment and scaling of pods, but they are designed for different use cases and have different behaviors.
+
+Deployment:
+
+Deployment is the most common controller used in Kubernetes for managing stateless applications.
+It ensures that a specified number of replicas of a pod are running at all times, and it allows for scaling, rolling updates, and rollbacks.
+It provides declarative updates to applications, meaning you describe the desired state, and Kubernetes takes care of updating the actual state.
+The pod replicas in a Deployment are typically interchangeable and can be scaled up or down without impacting the application's behavior.
+It's suitable for stateless applications, where each pod is identical and can be replaced without causing data loss or disruptions.
+StatefulSet:
+
+StatefulSet is designed for managing stateful applications that require stable, unique network identities and stable storage.
+It maintains a sticky identity for each pod, even during rescheduling or scaling events. The pods are created in a predictable order and have stable hostnames.
+It's commonly used for databases, distributed file systems, and other applications that require unique identities and persistent storage.
+Unlike Deployment, scaling up or down in a StatefulSet can involve more complexity due to the need to handle unique identities and data persistence.
+It's suited for applications that need to maintain some level of state and cannot be treated as interchangeable replicas.
+In summary, use Deployment for stateless applications where pod replicas are interchangeable, and use StatefulSet for stateful applications that require stable identities and persistent storage. While both controllers manage pod deployment and scaling, their distinct behaviors cater to different application requirements.
