@@ -30,10 +30,10 @@ ATC is the heart of concourse. It runs the web UI, API and is responsible for al
 
 Multiple ATCs can be running as one cluster. They synchronize using locking mechanisms and spread work across the cluster. 
 The main components of ATC are:
-checker: continuously check versions of resources
-scheduler: schedule builds
-build tracker: running scheduled builds
-garbage collector: cleanup mechanism for removing unused or outdated objects.
+1. checker: continuously check versions of resources
+2. scheduler: schedule builds
+3. build tracker: running scheduled builds
+4. garbage collector: cleanup mechanism for removing unused or outdated objects.
 
 ##### Fly cli
 
