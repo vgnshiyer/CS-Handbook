@@ -120,3 +120,27 @@ It's commonly used for databases, distributed file systems, and other applicatio
 Unlike Deployment, scaling up or down in a StatefulSet can involve more complexity due to the need to handle unique identities and data persistence.
 It's suited for applications that need to maintain some level of state and cannot be treated as interchangeable replicas.
 In summary, use Deployment for stateless applications where pod replicas are interchangeable, and use StatefulSet for stateful applications that require stable identities and persistent storage. While both controllers manage pod deployment and scaling, their distinct behaviors cater to different application requirements.
+
+##### Why do we need ingress if service component can perform load balancing?
+
+While Kubernetes Services provide basic load balancing and routing capabilities, Ingress is a more advanced and flexible resource that is designed specifically for managing external access to services within a Kubernetes cluster. Ingress serves as a powerful tool for routing and controlling traffic to different services based on various rules, paths, and hostnames.
+
+Here are some reasons why you might want to use Ingress in Kubernetes, even though Services offer basic load balancing:
+
+Path and Host-Based Routing: Ingress allows you to route traffic based on URL paths and hostnames. With Services alone, you can't route different paths to different services using a single IP address.
+
+Single Entry Point: Ingress provides a single entry point to your cluster for external traffic. This is especially useful when you have multiple services that you want to expose externally without exposing each service's individual ClusterIP.
+
+HTTP and HTTPS: Ingress supports both HTTP and HTTPS traffic. It can terminate SSL/TLS and provide secure connections to your services.
+
+URL Rewriting and Redirection: Ingress can perform URL rewriting and redirection. For example, you can redirect HTTP traffic to HTTPS, or you can rewrite URLs to match your service's internal paths.
+
+Load Balancing Algorithms: While Services use a basic round-robin load balancing algorithm, Ingress can provide more advanced load balancing algorithms, such as least connections or IP hashing.
+
+Layer 7 Features: Ingress operates at the application layer (Layer 7) of the OSI model, which means it can inspect and route traffic based on application-specific information, such as headers.
+
+Integration with External Services: Ingress can be integrated with external services, such as content delivery networks (CDNs), caching, or web application firewalls (WAFs).
+
+Resource Consolidation: Ingress consolidates routing rules and configurations in a single resource, making it easier to manage and monitor compared to setting up multiple Services and NodePorts.
+
+Ingress controllers (like NGINX Ingress Controller or Traefik) are responsible for implementing Ingress rules and handling the traffic according to your specifications. They offer more advanced capabilities than basic load balancing by Services.
