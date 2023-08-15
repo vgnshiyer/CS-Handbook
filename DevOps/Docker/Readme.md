@@ -1,7 +1,9 @@
 # Docker important concepts
 
 ##### Define containerization
-[Containerization](https://intellipaat.com/blog/what-is-containerization/) is a form of virtualization through which applications are run in containers (isolated user spaces) all using a shared OS. It packs or encapsulates software code and all its dependencies for it to run in a consistent and uniform manner on any infrastructure.![[Screenshot 2023-08-03 at 2.16.11 PM.png]]
+[Containerization](https://intellipaat.com/blog/what-is-containerization/) is a form of virtualization through which applications are run in containers (isolated user spaces) all using a shared OS. It packs or encapsulates software code and all its dependencies for it to run in a consistent and uniform manner on any infrastructure.
+
+![image](https://github.com/vgnshiyer/CS-Handbook/assets/39982819/4a280a4d-54d4-49c8-aa4b-3ce3b16b2966)
 
 What Docker does is wrap the software needed in a file system that has everything for running the code, providing the runtime and all the necessary libraries and system tools.
 
