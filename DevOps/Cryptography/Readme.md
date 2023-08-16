@@ -83,3 +83,11 @@ A little retrospection on the DMS issue.
 - The DMS was able to establish a one-way authentication with the oracle DB server.
 - However, it was not able to verify the Kafka server certificate.
 - We had the AWS team make some changes in our particular account on the DMS instance to properly verify our certificate CA.
+
+**Some other concepts**
+
+Truststore:
+A truststore is a repository of digital certificates used to verify the authenticity of remote servers or entities in a secure communication process. It is primarily used in SSL/TLS protocols, such as HTTPS. The truststore contains certificates of trusted Certificate Authorities (CAs) and other entities that the client considers trustworthy. When a client connects to a server, it checks the server's certificate against the certificates in its truststore to ensure that the server is legitimate and not presenting a forged certificate. If the server's certificate is signed by a CA in the truststore, the connection is established with confidence. If not, the connection might be refused or a security warning is raised.
+
+Keystore:
+A keystore is a secure storage facility for cryptographic keys, including private keys and their corresponding public keys, as well as digital certificates. It is used to manage keys and certificates for various security purposes, such as authentication and encryption. In SSL/TLS communication, the keystore holds the private key of the server and its associated digital certificate. The private key is used for decrypting data encrypted with the corresponding public key, and the digital certificate is used to prove the authenticity of the server. A keystore can also store keys and certificates for other purposes, such as client authentication or code signing.
