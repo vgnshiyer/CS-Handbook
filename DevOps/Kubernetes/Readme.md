@@ -145,3 +145,61 @@ Resource Consolidation: Ingress consolidates routing rules and configurations in
 
 Ingress controllers (like NGINX Ingress Controller or Traefik) are responsible for implementing Ingress rules and handling the traffic according to your specifications. They offer more advanced capabilities than basic load balancing by Services.
 
+##### Scaling in kubernetes
+
+Kubernetes Deployments:
+A Deployment in Kubernetes provides a declarative way to manage applications. It allows you to specify the desired state of your application, and Kubernetes takes care of ensuring that the actual state matches the desired state. Deployments provide features like rolling updates and rollbacks, making it easier to manage changes to your application without downtime.
+
+Scaling with Kubernetes Deployments:
+
+Kubernetes deployments make scaling your application straightforward. You can scale your application horizontally by adjusting the number of replicas. When you need more resources or want to handle increased traffic, you can increase the number of replicas. Conversely, when traffic decreases, you can scale down.
+
+Scaling Up:
+`kubectl scale deployment nginx-deployment --replicas=4`
+
+This scales the nginx-deployment to have 4 replicas.
+
+Scaling Down:
+`kubectl scale deployment nginx-deployment --replicas=2`
+
+This scales down the nginx-deployment to have 2 replicas.
+
+Updating the Deployment:
+`kubectl set image deployment/nginx-deployment nginx=nginx:1.19`
+
+This updates the image of the nginx-deployment to version 1.19.
+
+When you update a deployment's image or configuration, Kubernetes performs rolling updates by gradually replacing old pods with new ones, ensuring minimal downtime.
+
+Rollback:
+If an update causes issues, you can rollback to the previous version:
+
+`kubectl rollout undo deployment/nginx-deployment`
+
+Automatic Scaling:
+
+Kubernetes also supports automatic scaling based on resource utilization using Horizontal Pod Autoscalers (HPA). For example:
+
+`kubectl autoscale deployment nginx-deployment --min=2 --max=5 --cpu-percent=80`
+
+This sets up autoscaling for the nginx-deployment based on CPU utilization, with a minimum of 2 replicas, a maximum of 5 replicas, and a target CPU utilization of 80%.
+
+##### Different types of deployments.
+
+source: aws docs
+Deployment strategies define how you want to deliver your software. Organizations follow different deployment strategies based on their business model. Some choose to deliver software that is fully tested, and others might want their users to provide feedback and let their users evaluate under development features (such as Beta releases)
+
+1. In-place Deployment
+In this strategy, the previous version of the application on each compute resource is stopped, the latest application is installed, and the new version of the application is started and validated. This allows application deployments to proceed with minimal disturbance to underlying infrastructure. With an in-place deployment, you can deploy your application without creating new infrastructure; however, the availability of your application can be affected during these deployments. This approach also minimizes infrastructure costs and management overhead associated with creating new resources.
+
+2. Blue/Green Deployment
+A blue/green deployment is a deployment strategy in which you create two separate, but identical environments. One environment (blue) is running the current application version and one environment (green) is running the new application version. Using a blue/green deployment strategy increases application availability and reduces deployment risk by simplifying the rollback process if a deployment fails. Once testing has been completed on the green environment, live application traffic is directed to the green environment and the blue environment is deprecated. Kubernetes doesn't inherently support blue-green deployments out of the box, but you can achieve this using techniques like Service and Ingress controllers in combination with Deployment or StatefulSet resources.
+
+3. Canary Deployment (determine percentage of traffic towards new version)
+Canary deployments involve gradually rolling out a new version of your application to a small subset of users or nodes before deploying it to the entire cluster. This allows you to test the new version in a controlled manner. Kubernetes supports canary deployments using the following techniques like using a service mesh (istio) to route a percentage of traffic to new version.
+
+4. Rolling deployments
+Rolling deployments are the default strategy in Kubernetes. When you update a Deployment's configuration (like the container image), Kubernetes automatically orchestrates the replacement of old pods with new ones in a controlled manner. This strategy ensures that the application remains available during the update process.
+
+5. A/B testing
+A/B testing involves running multiple versions of your application simultaneously to compare performance or user experience. It involves making newer versions of your application to a selected set of users (Beta testers). Kubernetes can support A/B testing through careful pod scheduling, custom scripting, or by using tools like Istio that offer more sophisticated traffic routing and splitting.
