@@ -1,21 +1,32 @@
 # Kubernetes important concepts
 
-##### K8s vs docker swarm
-![[Screenshot 2023-08-03 at 3.07.14 PM.png]]
+### K8s vs docker swarm
+![image](https://github.com/vgnshiyer/CS-Handbook/assets/39982819/af2d6381-c2c6-4acf-807d-db1f4a21b098)
 
-##### How is Kubernetes related to Docker?
+### How is Kubernetes related to Docker?
 It’s a known fact that Docker provides the lifecycle management of containers and a Docker image builds the runtime containers. But, since these individual containers have to communicate, Kubernetes is used. So, Docker builds the containers and these containers communicate with each other via Kubernetes. So, containers running on multiple hosts can be manually linked and orchestrated using Kubernetes.
 
-##### What is Container Orchestration?
+### What is Container Orchestration?
 Consider a scenario where you have 5-6 microservices for an application. Now, these microservices are put in individual containers, but won’t be able to communicate without container orchestration. So, as orchestration means the amalgamation of all instruments playing together in harmony in music, similarly container orchestration means all the services in individual containers working together to fulfill the needs of a single server.![[Screenshot 2023-08-03 at 3.12.22 PM.png]]
-##### How do we control the resource usage of POD?
+### How do we control the resource usage of POD?
 Controlling the resource usage of a Pod in Kubernetes is essential to ensure fair allocation of resources and prevent individual Pods from consuming excessive CPU and memory, which could negatively impact other Pods and the overall cluster performance. Kubernetes provides several mechanisms to control the resource usage of Pods:
 
 1. **Resource Requests and Limits**: Kubernetes allows you to set resource requests and limits for CPU and memory on a per-container basis within a Pod.
 
    – Resource Requests: It specifies the minimum amount of CPU and memory required for a container to run. Kubernetes will use this information for scheduling and determining the amount of resources allocated to a Pod.
-
+   ```
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+```
    – Resource Limits: It specifies the maximum amount of CPU and memory that a container can consume. Kubernetes enforces these limits to prevent a single container from using more resources than specified, which helps in avoiding resource contention.
+   ```
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "200m"
+```
 
 1. **Resource Quotas**: Kubernetes allows you to define Resource Quotas at the namespace level to limit the total amount of CPU and memory that can be consumed by all Pods within the namespace. Resource Quotas help prevent resource hogging and ensure a fair distribution of resources among different applications.
 
@@ -23,15 +34,19 @@ Controlling the resource usage of a Pod in Kubernetes is essential to ensure fai
 3. **Vertical Pod Autoscaler (VPA)**: VPA automatically adjusts the resource requests and limits of Pods based on their actual resource usage. It can resize the resource requests and limits to optimize resource allocation based on real-time usage patterns.
 4. **Quality of Service (QoS) Classes**: Kubernetes assigns QoS classes to Pods based on their resource requirements and usage. There are three classes: Guaranteed, Burstable, and BestEffort. The QoS classes help prioritize resource allocation and eviction decisions during resource contention.
 
+Guaranteed: Pods with resource requests and limits that are the same. They are assured to get the resources they need.
+Burstable: Pods with defined resource requests and limits, where requests are less than limits. They might burst beyond their requests, but not beyond the limits.
+BestEffort: Pods without resource requests or limits. They get whatever resources are available on the node.
+
 By using these mechanisms, you can effectively control the resource usage of Pods in your Kubernetes cluster, ensuring efficient resource allocation, high availability, and optimal performance for all applications running in the cluster.
 
-##### What is Kubelet?
+### What is Kubelet?
 This is an agent service which runs on each node and enables the slave to communicate with the master. So, Kubelet works on the description of containers provided to it in the PodSpec and makes sure that the containers described in the PodSpec are healthy and running.
 
-##### Why not use docker compose instead of Kubernetes?
+### Why not use docker compose instead of Kubernetes?
 Docker Compose is suitable for local development or small-scale deployments where you need to manage a few interconnected containers on a single host. On the other hand, Kubernetes is a more appropriate choice for managing containerized applications at scale, across multiple hosts or in a production environment where high availability, scalability, and resilience are crucial requirements.
 
-##### Explain the Kubernetes Architecture.
+### Explain the Kubernetes Architecture.
 Kubernetes is a powerful container orchestration platform that automates the deployment, scaling, and management of containerized applications. Its architecture is designed to be highly scalable, fault-tolerant, and flexible. At a high level, Kubernetes architecture consists of the following main components:
 ![image](https://github.com/vgnshiyer/CS-Handbook/assets/39982819/8455b1fb-d40f-4c62-baa3-682e2e74d998)
 
@@ -59,7 +74,7 @@ Kubernetes is a powerful container orchestration platform that automates the dep
     
 5. **Add-ons:** Kubernetes offers various optional add-ons to extend its functionality and provide additional features like logging, monitoring, and load balancing. Examples include the Kubernetes Dashboard, Heapster (for monitoring), and Ingress controllers.
 
-##### How to get the central logs from POD?
+### How to get the central logs from POD?
 To collect central logs from Pods running in a Kubernetes cluster, you can use a centralized logging solution. One popular approach is to use the ELK Stack, which consists of three main components: Elasticsearch, Logstash (or Fluentd), and Kibana. Here’s how you can set up central logging using the ELK Stack:
 
 1. Install Elasticsearch: Deploy Elasticsearch as a central log storage and indexing solution. Elasticsearch will store and index the logs collected from various Pods.
@@ -75,7 +90,7 @@ To collect central logs from Pods running in a Kubernetes cluster, you can use a
 6. View Logs in Kibana: Access Kibana using its web interface and connect it to the Elasticsearch backend. Once connected, you can create visualizations, search logs, and analyze log data from your Kubernetes Pods.
 
 ![[Screenshot 2023-08-03 at 3.39.01 PM.png]]
-##### What is Ingress network, and how does it work?
+### What is Ingress network, and how does it work?
 Ingress network is a collection of rules that acts as an entry point to the Kubernetes cluster. This allows inbound connections, which can be configured to give services externally through reachable URLs, load balance traffic, or by offering name-based virtual hosting. So, Ingress is an API object that manages external access to the services in a cluster, usually by HTTP and is the most powerful way of exposing service.
 
 1. **ReplicaSet:** A ReplicaSet ensures a specified number of identical replicas (pods) are running at all times. It is a higher-level abstraction over the concept of pods and provides declarative scaling and fault tolerance. ReplicaSets are useful when you want to maintain a certain number of replicas of a pod to ensure high availability and distribute the workload across nodes.
@@ -99,10 +114,10 @@ Ingress network is a collection of rules that acts as an entry point to the Kube
 
 These are some of the essential components in Kubernetes. Understanding how they interact and work together is fundamental to effectively managing and deploying applications on Kubernetes.
 
-##### What is Kube-dns?
+### What is Kube-dns?
 kube-dns, also known as CoreDNS, is a DNS-based service discovery and name resolution component used in a Kubernetes clusters. It's responsible for managing the DNS (Domain Name System) resolution of domain names within the cluster.
 
-##### Statefulset vs Deployment?
+### Statefulset vs Deployment?
 StatefulSet and Deployment are both controllers in Kubernetes that manage the deployment and scaling of pods, but they are designed for different use cases and have different behaviors.
 
 Deployment:
@@ -121,7 +136,7 @@ Unlike Deployment, scaling up or down in a StatefulSet can involve more complexi
 It's suited for applications that need to maintain some level of state and cannot be treated as interchangeable replicas.
 In summary, use Deployment for stateless applications where pod replicas are interchangeable, and use StatefulSet for stateful applications that require stable identities and persistent storage. While both controllers manage pod deployment and scaling, their distinct behaviors cater to different application requirements.
 
-##### Why do we need ingress if service component can perform load balancing?
+### Why do we need ingress if service component can perform load balancing?
 
 While Kubernetes Services provide basic load balancing and routing capabilities, Ingress is a more advanced and flexible resource that is designed specifically for managing external access to services within a Kubernetes cluster. Ingress serves as a powerful tool for routing and controlling traffic to different services based on various rules, paths, and hostnames.
 
@@ -145,7 +160,7 @@ Resource Consolidation: Ingress consolidates routing rules and configurations in
 
 Ingress controllers (like NGINX Ingress Controller or Traefik) are responsible for implementing Ingress rules and handling the traffic according to your specifications. They offer more advanced capabilities than basic load balancing by Services.
 
-##### Scaling in kubernetes
+### Scaling in kubernetes
 
 Kubernetes Deployments:
 A Deployment in Kubernetes provides a declarative way to manage applications. It allows you to specify the desired state of your application, and Kubernetes takes care of ensuring that the actual state matches the desired state. Deployments provide features like rolling updates and rollbacks, making it easier to manage changes to your application without downtime.
@@ -184,7 +199,7 @@ Kubernetes also supports automatic scaling based on resource utilization using H
 
 This sets up autoscaling for the nginx-deployment based on CPU utilization, with a minimum of 2 replicas, a maximum of 5 replicas, and a target CPU utilization of 80%.
 
-##### Different types of deployments.
+### Different types of deployments.
 
 source: aws docs
 Deployment strategies define how you want to deliver your software. Organizations follow different deployment strategies based on their business model. Some choose to deliver software that is fully tested, and others might want their users to provide feedback and let their users evaluate under development features (such as Beta releases)
@@ -203,3 +218,88 @@ Rolling deployments are the default strategy in Kubernetes. When you update a De
 
 5. A/B testing
 A/B testing involves running multiple versions of your application simultaneously to compare performance or user experience. It involves making newer versions of your application to a selected set of users (Beta testers). Kubernetes can support A/B testing through careful pod scheduling, custom scripting, or by using tools like Istio that offer more sophisticated traffic routing and splitting.
+
+### Persistence on K8s
+
+In Kubernetes, a Persistent Volume Claim (PVC) is a resource that allows you to request storage resources from a cluster. A PVC abstracts the underlying storage details and provides a way to dynamically provision and manage storage for your pods without tightly coupling them to specific storage configurations.
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce  # Access mode for the volume
+  resources:
+    requests:
+      storage: 1Gi  # Requested storage size
+```
+In this example, we're creating a Persistent Volume Claim named my-pvc that requests 1GB of storage with a "ReadWriteOnce" access mode. This means the volume can be mounted as read-write by a single node.
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - name: my-volume
+          mountPath: /data
+  volumes:
+    - name: my-volume
+      persistentVolumeClaim:
+        claimName: my-pvc  # Reference the PVC here
+```
+In this pod specification, we're referencing the my-pvc PVC in the volumes section. Inside the containers section, we're mounting the volume using the volumeMounts field. This allows the pod to access the storage provided by the PVC.
+
+When the pod is created, Kubernetes will automatically bind the Persistent Volume Claim to an available Persistent Volume (PV) that matches the requested storage size and access mode. If no suitable PV is available, Kubernetes can dynamically provision one based on the storage class defined in the PVC.
+
+Make sure you have a corresponding Persistent Volume provisioned in your cluster to fulfill the PVC. Here's an example of how you could define a Persistent Volume:
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 2Gi  # Storage capacity of the PV
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: standard
+  hostPath:
+    path: /data/my-pv  # The path on the host machine
+```
+
+In Kubernetes, a StorageClass is used to define different classes of storage with different performance characteristics, provisioning methods, and other attributes. StorageClasses allow you to dynamically provision Persistent Volumes based on Persistent Volume Claims. When you create a Persistent Volume Claim (PVC), you can reference a specific StorageClass to specify the type of storage you need.
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-storage
+provisioner: kubernetes.io/aws-ebs  # Example provisioner for AWS EBS
+parameters:
+  type: gp2  # Example parameter for EBS volume type
+```
+In this example, we're defining a StorageClass named fast-storage using the AWS EBS provisioner. The parameters section allows you to specify additional settings for the provisioner, such as the volume type (gp2 in this case).
+
+When you create this PVC, Kubernetes will dynamically provision a Persistent Volume based on the specified StorageClass, using the corresponding provisioner and parameters. This dynamic provisioning ensures that you get the appropriate storage type and configuration without needing to create the Persistent Volume manually.
+
+### Pod affinity and anti-affinity
+
+Pod Affinity:
+
+Pod Affinity ensures that pods are scheduled onto nodes that have other pods with specific characteristics or labels. It is used to place related or complementary pods close to each other on the same node.
+
+Example scenarios for using Pod Affinity: Placing a web application pod on a node with a caching service pod to reduce latency.
+
+Pod Anti-Affinity:
+
+Pod Anti-Affinity is the opposite of Pod Affinity. It ensures that pods are not scheduled onto nodes that have other pods with specific characteristics or labels. This is useful to ensure high availability and fault tolerance by spreading pods across different nodes.
+
+Example scenarios for using Pod Anti-Affinity:
+- Preventing critical pods of the same service from running on the same node to increase resilience.
+- Distributing pods of a database cluster across different nodes to avoid single points of failure.
+
