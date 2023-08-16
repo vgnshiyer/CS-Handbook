@@ -144,3 +144,4 @@ Integration with External Services: Ingress can be integrated with external serv
 Resource Consolidation: Ingress consolidates routing rules and configurations in a single resource, making it easier to manage and monitor compared to setting up multiple Services and NodePorts.
 
 Ingress controllers (like NGINX Ingress Controller or Traefik) are responsible for implementing Ingress rules and handling the traffic according to your specifications. They offer more advanced capabilities than basic load balancing by Services.
+
