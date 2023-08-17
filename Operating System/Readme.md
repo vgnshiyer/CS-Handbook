@@ -43,4 +43,8 @@ Users and programs can write to the /tmp directory to quickly share data or stor
 However, because files in /tmp are generally short-lived, it's important to ensure that important data isn't stored there, as it might get deleted during cleanup processes.
 Both /lib and /tmp serve important roles in the Linux filesystem hierarchy, contributing to the proper functioning of the system and providing convenient storage for temporary data.
 
+**/etc/resolv.conf**
+
+This file is used by the Domain Name Server to resolve a domain to IP address. It consists of a list of domain names that the DNS can use to resolve a domain name entered by the user. User might enter just one word, the DNS will append all the available search strings from the resolv.conf to resolve the domain name to the IP address of the servers.
+
 
