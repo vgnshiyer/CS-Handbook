@@ -66,6 +66,8 @@ CD:
 4. deployments to infrastructure
 5. smoke test: ensure deployed version is operational
 
+### Jenkins vs Concourse
+
 1. Pipeline and Job Configuration:
 
 Jenkins: Jenkins provides both Freestyle and Pipeline projects. Freestyle projects are simple and flexible, while Pipeline projects offer more structured and declarative pipeline definitions using Groovy-based DSL. Pipeline as Code allows defining pipelines within version control repositories.
@@ -121,3 +123,25 @@ Jenkins: Originally designed as a continuous integration tool, Jenkins has evolv
 Concourse: Primarily designed for CI/CD, Concourse emphasizes declarative configuration, testing, and automated delivery.
 
 Both Jenkins and Concourse have their strengths and weaknesses, and the choice between them depends on your team's preferences, the complexity of your pipelines, and the level of automation you require.
+
+### GitOps
+
+GitOps typically involves separating Continuous Integration (CI) from Continuous Deployment (CD). While both CI and CD are integral parts of modern software delivery pipelines, GitOps emphasizes a clear distinction between these two stages to maintain a more controlled and reliable deployment process.
+
+Here's how GitOps separates CI from CD:
+
+Continuous Integration (CI): CI focuses on automating the process of building, testing, and validating code changes. Developers commit their code to version control (usually Git), and CI pipelines automatically trigger various stages, such as compilation, unit testing, integration testing, and possibly even static code analysis. The goal of CI is to ensure that code changes are of high quality and don't introduce regressions before they are integrated into the main codebase.
+
+Continuous Deployment (CD): CD deals with the automated deployment of code changes to various environments, such as development, staging, and production. In a GitOps context, CD focuses on the reconciliation of the desired state defined in Git repositories with the actual state of the infrastructure and applications. This involves automating the deployment, configuration, and management of the software based on the Git repository's contents.
+
+By separating CI from CD, GitOps allows for several benefits:
+
+Clear Version Control: GitOps keeps the authoritative configuration and deployment information in Git repositories. This separation ensures that deployment-related configurations are not mixed with code changes.
+
+Auditability and Rollback: The separation enables better tracking of changes and provides an audit trail of what has been deployed when and by whom. This is important for compliance, troubleshooting, and quick rollbacks if issues arise.
+
+Simpler Deployment Rollbacks: If a deployment issue occurs, GitOps makes it easier to revert to a known working configuration by simply reverting the Git commit. This contrasts with a monolithic CI/CD pipeline, where separating code and configuration might be more complex.
+
+Enhanced Collaboration: Developers can focus on code changes without needing to worry about intricate deployment details. Operations teams can focus on maintaining the GitOps automation and monitoring.
+
+In summary, GitOps promotes a clear separation between Continuous Integration (CI) for code validation and Continuous Deployment (CD) for infrastructure and application management. This separation enhances traceability, reliability, and collaboration within the software delivery process.
