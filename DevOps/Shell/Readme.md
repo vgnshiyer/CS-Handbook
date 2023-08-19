@@ -341,3 +341,38 @@ netstat -an | grep LISTEN --> display all ports in use\
 `sort -k2 <file>` --> sort by 2nd column\
 `sort -u <file>` --> sort by unique removing duplicates\
 
+## Some more info
+```
+Variable:
+variable_name=value; //No space on either sides of "=" sign.
+	Eg.: a=Hello; a="Hello";a=1;
+	a=`ls -l`         # Assigns result of 'ls -l' command to 'a'; `` stand for evaluation.
+	
+variable print:
+
+echo "$variable_name" or echo "${variable_name}"
+echo "Some text $variable_name"
+
+printf "$a\n"; here new line is not printed after every print like in echo
+
+variable length:
+
+${#variable_name} //Gives variable length
+
+	In AWK : length(variable_name)
+	
+Read input:
+
+	read variable_name;
+
+Store input in a file:
+	read variable_name;
+	echo "$variable_name" > file_name.txt;
+			OR
+	read variable_name;
+	echo $variable_name > file_name.txt;
+	
+Comments:
+
+	#This is a comment;
+```
