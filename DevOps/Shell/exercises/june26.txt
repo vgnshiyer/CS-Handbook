@@ -1,0 +1,4 @@
+1,RamsDeptStore,Stationary,100,50
+2,RajStore,Departmental,85,80
+3,HealthyStore,Grocery,95,92
+4,MiniStore,Medical,60,55

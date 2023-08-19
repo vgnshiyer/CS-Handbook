@@ -1,0 +1,7 @@
+Roll,Name,Subject,Score
+101,Adam,CsC,30
+102,Juhi,Math,78
+101,Adam,Math,90
+103,Adam,Math,50
+101,Adam,CHM,50
+102,Juhi,CsC,50

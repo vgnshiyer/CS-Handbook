@@ -1,0 +1,1 @@
+Welcome to this tutorial on Unix where we are practicing some commands

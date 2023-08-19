@@ -1,0 +1,6 @@
+1,RajaR,9,60,85,SM
+2,Pooja,10,85,80,DAV
+3,RaghuRam,10,95,92,DAV
+4,Akhil,9,60,55,SM
+5,Bharath,10,80,88,SM
+6,Chandra,9,75,92,DAV
