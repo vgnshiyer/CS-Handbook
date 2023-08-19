@@ -199,6 +199,13 @@ Kubernetes also supports automatic scaling based on resource utilization using H
 
 This sets up autoscaling for the nginx-deployment based on CPU utilization, with a minimum of 2 replicas, a maximum of 5 replicas, and a target CPU utilization of 80%.
 
+**maxSurge and maxUnavailable parameters**
+The maxSurge and maxUnavailable parameters control how many pods can be created above the desired number of pods and how many pods can be unavailable during the update.
+
+**maxSurge** is the maximum number of pods that can be created above the desired number of pods. It can be a number or a percentage. The default value is 25%.
+
+**maxUnavailable** is the maximum number of pods that can be unavailable during the update. It can be a number or a percentage. The default value is 25%.
+
 ### Different types of deployments.
 
 source: aws docs
