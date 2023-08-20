@@ -303,11 +303,27 @@ ALLOWVOLUMEEXPANSION defines whether a volume can be expanded in size at a later
 
 ### Pod affinity and anti-affinity
 
+Node affinity and anti-affinity are mechanisms used to influence how pods are scheduled onto nodes based on node labels or other node attributes. 
+
 Pod Affinity:
 
 Pod Affinity ensures that pods are scheduled onto nodes that have other pods with specific characteristics or labels. It is used to place related or complementary pods close to each other on the same node.
 
 Example scenarios for using Pod Affinity: Placing a web application pod on a node with a caching service pod to reduce latency.
+
+Suppose you have nodes labeled with disk=ssd or disk=hdd, and you want to schedule pods that require SSD storage to SSD-labeled nodes. You can define a node affinity rule in a pod's YAML file like this:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ssd-pod
+spec:
+  containers:
+  - name: app-container
+    image: your-app-image
+  nodeSelector:
+    disk: ssd  # This specifies the node label requirement
+```
 
 Pod Anti-Affinity:
 
@@ -399,6 +415,45 @@ spec:
               name: my-config # the name of the configmap we want to use
 ```
 
+### Readiness Probe:
+A readiness probe is used to determine if a pod is ready to accept incoming network traffic. If a pod fails its readiness probe, it is removed from service and will not receive any traffic until it becomes ready again. This is particularly useful during rolling updates or when pods need time to initialize before serving traffic.
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+spec:
+  containers:
+  - name: app-container
+    image: web-app-image
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 80
+      initialDelaySeconds: 5
+      periodSeconds: 10
+```
+
+### Liveness probe
+A liveness probe checks whether a pod is still running as expected. If a pod fails its liveness probe, Kubernetes will automatically restart it. Liveness probes are important for detecting and recovering from situations where a pod becomes unresponsive or hangs.
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: critical-app
+spec:
+  containers:
+  - name: app-container
+    image: critical-app-image
+    livenessProbe:
+      exec:
+        command:
+        - check-script.sh
+      initialDelaySeconds: 10
+      periodSeconds: 15
+```
+
+
 ### Some more info
 
 1. 
@@ -427,4 +482,29 @@ kubectl apply -f pod.yaml
 ```
 
 3.
+Check if one of the nodes in the cluster has taints (doesn't matter which node)
+Create a taint on one of the nodes in your cluster with key of "app" and value of "web" and effect of "NoSchedule"
+Explain what it does exactly
+Verify it was applied
+Run a Pod that will be able to run on the node on which you applied the taint
 
+Node affinity is a property of Pods that attracts them to a set of nodes (either as a preference or a hard requirement). Taints are the opposite -- they allow a node to repel a set of pods.
+
+Tolerations are applied to pods. Tolerations allow the scheduler to schedule pods with matching taints. Tolerations allow scheduling but don't guarantee scheduling: the scheduler also evaluates other parameters as part of its function.
+
+Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. One or more taints are applied to a node; this marks that the node should not accept any pods that do not tolerate the taints.
+
+```
+kubectl describe no minikube | grep -i taints
+kubectl taint node minikube app=web:NoSchedule
+
+kubectl describe no minikube | grep -i taints
+kubectl run some-pod --image=redis
+kubectl edit po some-pod
+ tolerations:
+ - key: "key1"
+   operator: "Equal"
+   value: "value1"
+   effect: "NoSchedule"
+Save and exit. The Pod should be running.
+```
