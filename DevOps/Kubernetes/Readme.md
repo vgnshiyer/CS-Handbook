@@ -508,3 +508,5 @@ kubectl edit po some-pod
    effect: "NoSchedule"
 Save and exit. The Pod should be running.
 ```
+
+**Kustomize** makes it easy to customize configuration files without rewriting yaml files across different environments. It makes it easier to apply patches to deployments, generate configmaps, secrets without modifying the base deployment YAML file.
