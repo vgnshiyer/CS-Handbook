@@ -294,6 +294,13 @@ In this example, we're defining a StorageClass named fast-storage using the AWS 
 
 When you create this PVC, Kubernetes will dynamically provision a Persistent Volume based on the specified StorageClass, using the corresponding provisioner and parameters. This dynamic provisioning ensures that you get the appropriate storage type and configuration without needing to create the Persistent Volume manually.
 
+The output of the kubectl get sc command provides some useful information about the StorageClass:
+
+PROVISIONNER what is the underlying storage provider, in this case AWS EBS (Elastic Block Storage)
+RECLAIMPOLICY what will happen with the volume when the PersistentVolume resource is deleted, in this case Delete will delete the block storage.
+VOLUMEBINDINGMODE specifies how to provision the actual volume, WaitForFirstConsumer will provision the actual volume object once there is a matching claim.
+ALLOWVOLUMEEXPANSION defines whether a volume can be expanded in size at a later point in time.
+
 ### Pod affinity and anti-affinity
 
 Pod Affinity:
@@ -310,3 +317,84 @@ Example scenarios for using Pod Anti-Affinity:
 - Preventing critical pods of the same service from running on the same node to increase resilience.
 - Distributing pods of a database cluster across different nodes to avoid single points of failure.
 
+### Configmaps and Secrets
+
+Configmaps and secrets are a way to store information that is used by several deployments and pods in your cluster. This makes it easy to update the configuration in one place, when you want to change it.
+
+Both configmaps and secrets are generic key-value pairs, but secrets are base64 encoded and configmaps are not.
+
+💡 Secrets are not encrypted, they are encoded. This means that if someone gets access to the cluster, they can will be able to read the values.
+
+This lets you change easily configuration depending on the environment (development, production, testing, etc.) and to dynamically change configuration at runtime.
+
+A ConfigMap manifest looks like this in yaml:
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  key1: value1
+  key2: value2
+  key3: value3
+```
+There are three ways to create ConfigMaps using the kubectl create configmap command.
+
+Use the contents of an entire directory with kubectl create configmap my-config --from-file=./my/dir/path/
+Use the contents of a file or specific set of files with kubectl create configmap my-config --from-file=./my/file.properties
+💡 More info
+Env-files contain a list of environment variables. These syntax rules apply:
+
+Each line in an env file has to be in VAR=VAL format.
+Lines beginning with # (i.e. comments) are ignored.
+Blank lines are ignored.
+There is no special handling of quotation marks (i.e. they will be part of the ConfigMap value).
+```
+enemies=aliens
+lives=3
+allowed="true"
+```
+Will be rendered as:
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+data:
+  enemies: aliens
+  lives: "3"
+  allowed: "true"
+```
+Use literal key-value pairs defined on the command line with kubectl create configmap my-config --from-literal=key1=value1 --from-literal=key2=value2
+💡 remember the --dry-run=client -o yaml trick to see what the yaml file will look like before you apply it.
+
+secrets are used for storing configuration that is considered sensitive, and well ... secret.
+
+When you create a secret Kubernetes will go out of it's way to not print the actual values of secret object, to things like logs or command output.
+
+You should use secrets to store things like passwords for databases, API keys, certificates, etc.
+
+Rather than hardcode this sensitive information and commit it to git for all the world to see, we source these values from environment variables.
+
+secrets function for the most part identically to configmaps, but with the difference that the actual values are base64 encoded. base64 encoded means that the values are obscured, but can be trivially decoded. When values from a secret are used, Kubernetes handles the decoding for you.
+
+To use a configmap or secret in a deployment, you can either mount it in as a volume, or use it directly as an environment variable.
+
+This will inject all key-value pairs from a configmap as environment variables in a container. The keys will be the name of variables, and the values will be values of the variables.
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  ...
+    spec:
+    containers:
+      - name: my-app
+        image: my-app:latest
+        ports:
+          - containerPort: 8080
+        envFrom:
+          - configMapRef: # this is the configmap that we want to use
+              name: my-config # the name of the configmap we want to use
+```
