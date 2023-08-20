@@ -398,3 +398,33 @@ spec:
           - configMapRef: # this is the configmap that we want to use
               name: my-config # the name of the configmap we want to use
 ```
+
+### Some more info
+
+1. 
+How to list all the Pods with the label "app=web"?
+How to list all objects labeled as "env=staging"?
+How to list all deployments from "env=prod" and "type=web"?
+
+`k get po -l app=web k get all -l env=staging k get deploy -l env=prod,type=web`
+
+2.
+Apply the label "hw=max" on one of the nodes in your cluster
+Create and run a Pod called some-pod with the image redis and configure it to use the selector hw=max
+Explain why node selectors might be limited
+
+`kubectl label nodes some-node hw=max`
+```
+kubectl run some-pod --image=redis --dry-run=client -o yaml > pod.yaml
+
+vi pod.yaml
+
+spec:
+  nodeSelector:
+    hw: max
+
+kubectl apply -f pod.yaml
+```
+
+3.
+
