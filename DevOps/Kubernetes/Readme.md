@@ -529,3 +529,98 @@ spec:
     targetPort: 8080
 ```
 You can then use DNS to access pods using their hostname (e.g., pod-name.my-headless-service).
+
+Pod Not Running:
+
+ImagePullBackOff: The pod is unable to pull the specified container image. Possible reasons include incorrect image name or tag, image not available in the specified repository, or authentication issues.
+CrashLoopBackOff: The container within the pod keeps crashing and restarting. This can be due to application code errors, missing dependencies, or resource limits.
+Pending: The pod is not getting scheduled onto a node. Possible reasons include resource constraints, node affinity rules, or insufficient resources on the cluster.
+
+Service Not Available:
+
+Connection Refused: The service is not reachable from outside the cluster. Possible reasons include misconfigured service ports, firewall rules, or the service is not exposed correctly.
+Endpoints Not Ready: The service endpoints are not properly configured or the underlying pods are not running. This can occur due to issues with pod readiness probes or label selectors.
+
+Deployment or ReplicaSet Issues:
+
+Desired Replicas Not Met: The desired number of replicas specified in the Deployment or ReplicaSet is not being achieved. Possible reasons include resource constraints, rolling updates in progress, or issues with the scaling process.
+Old Replica Pods: After a Deployment or ReplicaSet update, old pods might still be running. This can be due to improper termination settings or rolling update configuration.
+
+StatefulSet Issues:
+
+Pods Not Created: Pods managed by a StatefulSet are not being created. Possible reasons include issues with PVC (Persistent Volume Claim) provisioning, volume availability, or storage class configuration.
+
+DaemonSet Issues:
+
+Node Selector Mismatch: DaemonSet pods are not scheduled on certain nodes due to node affinity rules or label mismatches.
+Resource Constraints: Insufficient resources on nodes prevent the scheduling of DaemonSet pods.
+
+Job or CronJob Failures:
+
+Job Completion Failures: The pods launched by a Job or CronJob are failing to complete successfully. This could be due to application errors or timeouts.
+Concurrency Issues: For CronJobs, running instances might overlap due to concurrency settings, causing resource exhaustion.
+
+Network Policies:
+
+Pod Communication Blocked: Network policies might prevent communication between pods or services, leading to connection failures.
+
+Resource Quota Exceeded:
+
+Pods Not Scheduled: If a namespace has resource quotas defined and the sum of resources requested by pods exceeds the quota, new pods won't be scheduled.
+
+Cluster-Level Issues:
+
+Node Failures: If nodes fail, the pods running on those nodes may also fail to run. This could be due to hardware failures, network issues, or node depletion.
+
+Get Cluster Information:
+
+kubectl cluster-info: Displays information about the Kubernetes cluster and its components.
+Pod and Node Inspection:
+
+kubectl get pods: List all pods in the current namespace.
+kubectl describe pod <pod-name>: Get detailed information about a specific pod, including events and conditions.
+kubectl logs <pod-name>: View the logs of a specific pod.
+kubectl get nodes: List all nodes in the cluster.
+kubectl describe node <node-name>: Get detailed information about a specific node.
+Service Inspection:
+
+kubectl get services: List all services in the current namespace.
+kubectl describe service <service-name>: Get detailed information about a specific service.
+Config and YAML Validation:
+
+kubectl apply -f <yaml-file>: Apply a configuration from a YAML file.
+kubectl diff -f <yaml-file>: Show the differences between the applied configuration and the one in the file.
+kubectl validate -f <yaml-file>: Validate a configuration file.
+Pod Shell Access:
+
+kubectl exec -it <pod-name> -- /bin/sh: Open a shell inside a running pod for debugging purposes.
+Pod Diagnostics and Troubleshooting:
+
+kubectl describe pod <pod-name>: Check events, conditions, and resource utilization of a pod.
+kubectl logs <pod-name> -c <container-name>: View logs of a specific container within a pod.
+kubectl describe pod <pod-name> -n <namespace>: Describe a pod in a specific namespace.
+Resource Quota and Limits:
+
+kubectl get resourcequotas: List resource quotas in the current namespace.
+kubectl describe resourcequota <resourcequota-name>: Get detailed information about a specific resource quota.
+kubectl describe limitrange <limitrange-name>: Get detailed information about a specific limit range.
+Network Diagnostics:
+
+kubectl get networkpolicies: List network policies in the current namespace.
+kubectl describe networkpolicy <networkpolicy-name>: Get detailed information about a specific network policy.
+Cluster Events and Logs:
+
+kubectl get events: List cluster events to help diagnose issues.
+Monitor cluster-level logs, such as API server logs and control plane component logs.
+Node-Level Troubleshooting:
+
+SSH into a problematic node to inspect logs and system state directly.
+Kubernetes Dashboard:
+
+If your cluster has a dashboard installed, you can use it to inspect various resources and troubleshoot issues visually.
+
+Control Plane Issues: Problems with the control plane components (API server, etcd, etc.) can affect the scheduling and management of pods.
+
+Configuration Errors:
+
+Invalid Configuration: Incorrect configurations in the resource's YAML file can prevent the resource from running properly.
