@@ -510,3 +510,22 @@ Save and exit. The Pod should be running.
 ```
 
 **Kustomize** makes it easy to customize configuration files without rewriting yaml files across different environments. It makes it easier to apply patches to deployments, generate configmaps, secrets without modifying the base deployment YAML file.
+
+### Headless services
+
+A headless service in Kubernetes is a service that does not allocate a cluster IP address to its pods. Instead, it allows direct DNS-based access to individual pod IPs. For stateful applications, you might use a headless service to access individual pods directly using DNS lookups. This is particularly useful for StatefulSets.
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-headless-service
+spec:
+  clusterIP: None
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```
+You can then use DNS to access pods using their hostname (e.g., pod-name.my-headless-service).
