@@ -47,4 +47,6 @@ Both /lib and /tmp serve important roles in the Linux filesystem hierarchy, cont
 
 This file is used by the Domain Name Server to resolve a domain to IP address. It consists of a list of domain names that the DNS can use to resolve a domain name entered by the user. User might enter just one word, the DNS will append all the available search strings from the resolv.conf to resolve the domain name to the IP address of the servers.
 
-
+kill -15 sends a TERM signal, which attempts to gracefully stop a process. It is the default.
+kill -1 sends a HUP signal, which reloads a process.
+kill -9 sends a KILL signal, which kills a process.
