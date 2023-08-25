@@ -34,8 +34,8 @@ resources:
 3. **Vertical Pod Autoscaler (VPA)**: VPA automatically adjusts the resource requests and limits of Pods based on their actual resource usage. It can resize the resource requests and limits to optimize resource allocation based on real-time usage patterns.
 4. **Quality of Service (QoS) Classes**: Kubernetes assigns QoS classes to Pods based on their resource requirements and usage. There are three classes: Guaranteed, Burstable, and BestEffort. The QoS classes help prioritize resource allocation and eviction decisions during resource contention.
 
-Guaranteed: Pods with resource requests and limits that are the same. They are assured to get the resources they need.
-Burstable: Pods with defined resource requests and limits, where requests are less than limits. They might burst beyond their requests, but not beyond the limits.
+Guaranteed: Pods with resource requests and limits that are the same. They are assured to get the resources they need. \
+Burstable: Pods with defined resource requests and limits, where requests are less than limits. They might burst beyond their requests, but not beyond the limits. \
 BestEffort: Pods without resource requests or limits. They get whatever resources are available on the node.
 
 By using these mechanisms, you can effectively control the resource usage of Pods in your Kubernetes cluster, ensuring efficient resource allocation, high availability, and optimal performance for all applications running in the cluster.
