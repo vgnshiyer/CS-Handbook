@@ -8,6 +8,7 @@ Advantages:
 
 Provides end-to-end encryption without exposing decrypted data to intermediate devices.
 Backend servers retain control over SSL/TLS certificates and configuration.
+
 Disadvantages:
 
 Load balancers and other intermediaries have limited visibility into the encrypted traffic, making traffic inspection and optimizations challenging.
@@ -21,6 +22,7 @@ Advantages:
 
 Allows the proxy to inspect and modify traffic, enabling advanced security features like intrusion detection/prevention and content filtering.
 Simplifies certificate management, as the proxy manages the server's SSL/TLS certificates.
+
 Disadvantages:
 
 Introduces an additional point of potential failure or vulnerability.
