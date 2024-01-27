@@ -296,9 +296,9 @@ When you create this PVC, Kubernetes will dynamically provision a Persistent Vol
 
 The output of the kubectl get sc command provides some useful information about the StorageClass:
 
-PROVISIONNER what is the underlying storage provider, in this case AWS EBS (Elastic Block Storage)
-RECLAIMPOLICY what will happen with the volume when the PersistentVolume resource is deleted, in this case Delete will delete the block storage.
-VOLUMEBINDINGMODE specifies how to provision the actual volume, WaitForFirstConsumer will provision the actual volume object once there is a matching claim.
+PROVISIONNER what is the underlying storage provider, in this case AWS EBS (Elastic Block Storage) \
+RECLAIMPOLICY what will happen with the volume when the PersistentVolume resource is deleted, in this case Delete will delete the block storage. \
+VOLUMEBINDINGMODE specifies how to provision the actual volume, WaitForFirstConsumer will provision the actual volume object once there is a matching claim. \
 ALLOWVOLUMEEXPANSION defines whether a volume can be expanded in size at a later point in time.
 
 ### Pod affinity and anti-affinity
