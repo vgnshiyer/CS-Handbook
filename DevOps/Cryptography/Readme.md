@@ -81,11 +81,6 @@ The server verifies the client's certificate against a list of trusted CAs, just
 The communication channel is encrypted between the client and the server using their respective keys from the certificates.
 In two-way authentication, both the client and the server validate each other's identities, creating a stronger level of trust and security. This is particularly important in applications where data integrity and confidentiality are paramount.
 
-A little retrospection on the DMS issue. 
-- The DMS was able to establish a one-way authentication with the oracle DB server.
-- However, it was not able to verify the Kafka server certificate.
-- We had the AWS team make some changes in our particular account on the DMS instance to properly verify our certificate CA.
-
 **Some other concepts**
 
 Truststore:
