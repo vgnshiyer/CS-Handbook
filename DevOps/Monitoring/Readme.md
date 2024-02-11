@@ -14,3 +14,14 @@
 - It provides PromQL query language to get data.
 - Can use prometheus UI to get status of services.
 - Can use powerful data visualization tools like Grafana that uses PromQL under to hood to get the data.
+
+### Ansible
+
+- manage multiple servers with just one file.
+- It is the easiest.
+- agent-less. (dont need to install anything on your servers)
+- simply runs over ssh and runs command.
+- push model (pushes to the servers)
+- playbooks: desired configuration for your servers
+- can be used to automate infrastructure
+- 
